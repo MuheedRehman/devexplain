@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DevExplain</title>
+  <style>
+        
+        .export-row {
+      margin-top: 18px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .export-btn {
+      background: #0f766e;
+      color: white;
+      border: none;
+      padding: 10px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .export-btn:hover {
+      opacity: 0.92;
+    }
+        .risk-box {
+      margin-top: 20px;
+      padding: 16px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .risk-high {
+      background: #fef2f2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+    }
+
+    .risk-medium {
+      background: #fffbeb;
+      color: #92400e;
+      border: 1px solid #fde68a;
+    }
+
+    .risk-low {
+      background: #ecfdf5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+    }
+
+        .fix-row {
+      margin-top: 10px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .copy-btn {
+      background: #111827;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .copy-btn:hover {
+      opacity: 0.92;
+    }
+
+    .copy-status {
+      font-size: 13px;
+      color: #065f46;
+      font-weight: 600;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f7fb;
+      color: #222;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 14px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+
+    h1 {
+      margin: 0 0 8px 0;
+      font-size: 32px;
+    }
+
+    .subtitle {
+      color: #666;
+      margin-bottom: 24px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 240px;
+      padding: 14px;
+      border: 1px solid #d9e1ec;
+      border-radius: 10px;
+      font-family: Consolas, monospace;
+      font-size: 14px;
+      resize: vertical;
+      box-sizing: border-box;
+    }
+
+    .button-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: none;
+      padding: 12px 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .scan-btn {
+      background: #2563eb;
+      color: white;
+    }
+
+    .sample-btn {
+      background: #eef2ff;
+      color: #3730a3;
+    }
+
+    .clear-btn {
+      background: #f3f4f6;
+      color: #374151;
+    }
+
+    button:hover {
+      opacity: 0.92;
+    }
+
+    .summary {
+      margin-top: 24px;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .empty-state {
+      margin-top: 20px;
+      padding: 16px;
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      color: #065f46;
+      border-radius: 10px;
+    }
+
+    .card {
+      margin-top: 16px;
+      border-radius: 12px;
+      padding: 16px;
+      border: 1px solid #e5e7eb;
+      background: #fff;
+    }
+
+    .card.high {
+      border-left: 6px solid #dc2626;
+      background: #fef2f2;
+    }
+
+    .card.medium {
+      border-left: 6px solid #f59e0b;
+      background: #fffbeb;
+    }
+
+    .card.low {
+      border-left: 6px solid #2563eb;
+      background: #eff6ff;
+    }
+
+    .badge {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .badge.high {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .badge.medium {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .badge.low {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .section-label {
+      font-weight: 700;
+      margin-top: 10px;
+      margin-bottom: 4px;
+    }
+
+    .loading {
+      margin-top: 20px;
+      color: #374151;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔍 DevExplain</h1>
+    <div class="subtitle">Understand your Terraform in seconds</div>
+
+    <textarea id="tfInput" placeholder="Paste your Terraform code here..."></textarea>
+
+    <div class="button-row">
+      <button class="scan-btn" onclick="scan()">Scan</button>
+      <button class="sample-btn" onclick="loadSample()">Load Sample</button>
+      <button class="clear-btn" onclick="clearAll()">Clear</button>
+    </div>
+
+    <div id="results"></div>
+  </div>
+
+  <script>
+     let latestScanResult = null;
+    function loadSample() {
+      document.getElementById("tfInput").value = `resource "azurerm_storage_account" "example" {
+  name                          = "mystorageacct123"
+  resource_group_name           = "example-rg"
+  location                      = "westeurope"
+  account_tier                  = "Standard"
+  account_replication_type      = "LRS"
+  allow_blob_public_access      = true
+  public_network_access_enabled = true
+}
+
+resource "azurerm_network_interface" "nic" {
+  name                = "example-nic"
+  location            = "westeurope"
+  resource_group_name = "example-rg"
+}
+
+resource "azurerm_linux_virtual_machine" "vm" {
+  name                = "example-vm"
+  resource_group_name = "example-rg"
+  location            = "westeurope"
+  size                = "Standard_D4s_v3"
+}`;
+    }
+
+    function clearAll() {
+  document.getElementById("tfInput").value = "";
+  document.getElementById("results").innerHTML = "";
+  latestScanResult = null;
+}
+
+    function getSeverityClass(severity) {
+      if (!severity) return "low";
+      const s = severity.toLowerCase();
+      if (s === "high") return "high";
+      if (s === "medium") return "medium";
+      return "low";
+    }
+
+        async function copyFix(text, buttonElement) {
+      try {
+        await navigator.clipboard.writeText(text);
+
+        const status = buttonElement.nextElementSibling;
+        status.textContent = "Copied!";
+        setTimeout(() => {
+          status.textContent = "";
+        }, 1500);
+      } catch (error) {
+        const status = buttonElement.nextElementSibling;
+        status.textContent = "Copy failed";
+        setTimeout(() => {
+          status.textContent = "";
+        }, 1500);
+      }
+    }
+        function downloadFile(filename, content, contentType) {
+      const blob = new Blob([content], { type: contentType });
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      a.click();
+
+      URL.revokeObjectURL(url);
+    }
+
+    function downloadJson() {
+      if (!latestScanResult) return;
+
+      const content = JSON.stringify(latestScanResult, null, 2);
+      downloadFile("devexplain-report.json", content, "application/json");
+    }
+
+    function downloadTextReport() {
+      if (!latestScanResult) return;
+
+      let text = `DevExplain Scan Report\n`;
+      text += `======================\n\n`;
+      text += `Summary: ${latestScanResult.summary}\n`;
+      text += `Risk Score: ${latestScanResult.risk_score} / 10\n`;
+      text += `Risk Level: ${latestScanResult.risk_level}\n\n`;
+
+      if (!latestScanResult.findings || latestScanResult.findings.length === 0) {
+        text += `No issues found.\n`;
+      } else {
+        latestScanResult.findings.forEach((f, index) => {
+          text += `Issue ${index + 1}\n`;
+          text += `--------\n`;
+          text += `Severity: ${f.severity}\n`;
+          text += `Title: ${f.title}\n`;
+          text += `What it means: ${f.explanation}\n`;
+          text += `Suggested fix: ${f.suggestion}\n\n`;
+        });
+      }
+
+      downloadFile("devexplain-report.txt", text, "text/plain");
+    }
+
+    async function scan() {
+      const text = document.getElementById("tfInput").value.trim();
+
+      if (!text) {
+        document.getElementById("results").innerHTML =
+          `<div class="empty-state">Please paste some Terraform code first.</div>`;
+        return;
+      }
+
+      document.getElementById("results").innerHTML =
+        `<div class="loading">⏳ Scanning your Terraform...</div>`;
+
+      try {
+        const res = await fetch("/scan", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({ terraform_text: text })
+});
+
+if (!res.ok) {
+  throw new Error("Backend returned an error");
+}
+
+const data = await res.json();
+latestScanResult = data;
+
+        let riskClass = "risk-low";
+if (data.risk_level === "High") {
+  riskClass = "risk-high";
+} else if (data.risk_level === "Medium") {
+  riskClass = "risk-medium";
+}
+
+let html = `
+  <div class="summary">${data.summary}</div>
+  <div class="risk-box ${riskClass}">
+    Risk Score: ${data.risk_score} / 10 | Risk Level: ${data.risk_level}
+  </div>
+
+  <div class="export-row">
+    <button class="export-btn" onclick="downloadJson()">Download JSON</button>
+    <button class="export-btn" onclick="downloadTextReport()">Download Report</button>
+  </div>
+`;
+
+        if (!data.findings || data.findings.length === 0) {
+          html += `<div class="empty-state">✅ No obvious issues found in this basic scan.</div>`;
+        } else {
+          data.findings.forEach(f => {
+            const severityClass = getSeverityClass(f.severity);
+            html += `
+              <div class="card ${severityClass}">
+                <div class="badge ${severityClass}">${f.severity}</div>
+                <div class="card-title">${f.title}</div>
+
+                <div class="section-label">What it means</div>
+                <div>${f.explanation}</div>
+
+                                <div class="section-label">Suggested fix</div>
+                <div>${f.suggestion}</div>
+
+                <div class="fix-row">
+                  <button class="copy-btn" onclick="copyFix(\`${f.suggestion.replace(/`/g, "\\`")}\`, this)">
+                    Copy fix
+                  </button>
+                  <span class="copy-status"></span>
+                </div>
+              </div>
+            `;
+          });
+        }
+
+        document.getElementById("results").innerHTML = html;
+      } catch (error) {
+        document.getElementById("results").innerHTML =
+          `<div class="empty-state">❌ Error connecting to backend. Make sure FastAPI is running.</div>`;
+      }
+    }
+  </script>
+</body>
+</html>
