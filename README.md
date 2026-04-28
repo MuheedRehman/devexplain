@@ -23,7 +23,7 @@ DevExplain is a lightweight DevOps tool that analyzes Terraform code and explain
 
 ## Live Demo
 
-https://devexplain-34165.azurewebsites.net/
+https://devexplain-22148.azurewebsites.net/
 
 ## How it works
 
