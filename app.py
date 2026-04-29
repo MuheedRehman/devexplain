@@ -365,7 +365,7 @@ HOME_PAGE = """
 
   <div class="hero">
     <h1>🔍 DevExplain</h1>
-    <p>Understand Terraform risks, security issues, costs and AI explanations in seconds</p>
+    <p>Understand Terraform risks, security issues, costs and AI explanation in seconds</p>
   </div>
 
   <div class="features">
