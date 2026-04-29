@@ -5,6 +5,7 @@ from pydantic import BaseModel
 from typing import List
 import re
 import os
+from openai import OpenAI
 
 app = FastAPI(title="DevExplain MVP")
 
@@ -364,7 +365,7 @@ HOME_PAGE = """
 
   <div class="hero">
     <h1>🔍 DevExplain</h1>
-    <p>Understand Terraform risks, security issues, costs and AI explanation in seconds</p>
+    <p>Understand Terraform risks, security issues, costs , and AI explanations in seconds</p>
   </div>
 
   <div class="features">
@@ -535,7 +536,6 @@ def ai_summary(request: AISummaryRequest):
             ai_summary="AI is not configured yet. Please set OPENAI_API_KEY in Azure App Service settings."
         )
 
-    from openai import OpenAI
     client = OpenAI(api_key=api_key)
 
     findings_text = "\n".join(
@@ -606,7 +606,7 @@ def scan(request: TerraformInput):
         if severity == "high":
             raw_score += 3
         elif severity == "medium":
-            raw_score += 
+            raw_score += 2
         else:
             raw_score += 1
 
