@@ -18,11 +18,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-
       - name: Create deployment package
         run: |
           zip -r devexplain.zip app.py requirements.txt
