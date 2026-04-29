@@ -7,7 +7,6 @@ on:
 
 env:
   AZURE_WEBAPP_NAME: devexplain-87078
-  PYTHON_VERSION: "3.11"
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
@@ -18,11 +17,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Show repo structure
+        run: |
+          echo "Root files:"
+          ls -la
+          echo "All files:"
+          find . -maxdepth 3 -type f
+
       - name: Create deployment package
         run: |
           zip -r devexplain.zip app.py requirements.txt
+          unzip -l devexplain.zip
 
-      - name: Deploy to Azure App Service
+      - name: Deploy to Azure
         uses: azure/webapps-deploy@v3
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
