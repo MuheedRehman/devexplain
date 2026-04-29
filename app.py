@@ -5,7 +5,6 @@ from pydantic import BaseModel
 from typing import List
 import re
 import os
-from openai import OpenAI
 
 app = FastAPI(title="DevExplain MVP")
 
@@ -536,6 +535,7 @@ def ai_summary(request: AISummaryRequest):
             ai_summary="AI is not configured yet. Please set OPENAI_API_KEY in Azure App Service settings."
         )
 
+    from openai import OpenAI
     client = OpenAI(api_key=api_key)
 
     findings_text = "\n".join(
