@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  AZURE_WEBAPP_NAME: devexplain-34165
+  AZURE_WEBAPP_NAME: devexplain-87078
   PYTHON_VERSION: "3.11"
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
