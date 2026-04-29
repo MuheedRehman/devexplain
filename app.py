@@ -365,7 +365,7 @@ HOME_PAGE = """
 
   <div class="hero">
     <h1>🔍 DevExplain</h1>
-    <p>Understand Terraform risks, security issues, and costs in seconds</p>
+    <p>Understand Terraform risks, security issues, costs and AI explanations in seconds</p>
   </div>
 
   <div class="features">
@@ -606,7 +606,7 @@ def scan(request: TerraformInput):
         if severity == "high":
             raw_score += 3
         elif severity == "medium":
-            raw_score += 2
+            raw_score += 
         else:
             raw_score += 1
 
