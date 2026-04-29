@@ -6,8 +6,9 @@ on:
       - main
 
 env:
-  AZURE_WEBAPP_NAME: devexplain-87078
+  AZURE_WEBAPP_NAME: devexplain-34165
   PYTHON_VERSION: "3.11"
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   build-and-deploy:
@@ -22,14 +23,13 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
-      - name: Install dependencies
+      - name: Create deployment package
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          zip -r devexplain.zip app.py requirements.txt
 
       - name: Deploy to Azure App Service
         uses: azure/webapps-deploy@v3
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: .
+          package: devexplain.zip
